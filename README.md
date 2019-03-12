@@ -71,3 +71,18 @@ After the modification and exiting the editor you should restart MongoDB.
 
 ## Step 4 - Creating MongoDB Credentials
 
+User authentication in MongoDB is disabled by default. It means that the database has been started without any access control. In order to create MongoDB credentials, execute following commands.
+
+<code><b>$</b> mongo</code>
+
+<code><b>></b> show dbs</code>
+
+Switch to the <b>admin</b> database, and then create the root user executing the following commands.
+
+<code><b>></b> use admin</code>
+
+<code><b>></b> db.createUser({user:"root", pwd:"<i>yourPasswordHere</i>", roles:[{role:"root", db:"admin"}]})</code>
+
+In addition, you should modify 9th line in <i>/lib/systemd/system/mongod.service</i> as shown below.
+
+<code>ExecStart=/usr/bin/mongod <b>--auth</b> --unixSocketPrefix=${SOCKETPATH} --config ${CONF} $DAEMON_OPTS</code>
