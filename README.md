@@ -86,3 +86,15 @@ Switch to the <b>admin</b> database, and then create the root user executing the
 In addition, you should modify 9th line in <i>/lib/systemd/system/mongod.service</i> as shown below.
 
 <code>ExecStart=/usr/bin/mongod <b>--auth</b> --unixSocketPrefix=${SOCKETPATH} --config ${CONF} $DAEMON_OPTS</code>
+
+After modifying the configuration file the daemon should be reloaded, and the service should be restarted.
+
+<code><b>$</b> systemctl daemon-reload</code>
+
+<code><b>$</b> sudo systemctl restart mongodb</code>
+
+Now you should authenticate yourself as a MongoDB user while connecting to the database.
+
+<code><b>$</b> mongo -u "root" -p --authenticationDatabase "admin"</code>
+
+After this point, you are required to enter your password in order to access to the database.
